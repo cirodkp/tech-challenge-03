@@ -45,27 +45,18 @@ jobs:
 
       - name: Write to Job Summary
         run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY        
-
   deploy:
     runs-on: ubuntu-latest
     needs: build
+    strategy:
+      matrix:
+        service: [TechChallenge01.Api, TechChallenge01.ApiMessaging, TechChallenge01.TokenApi,TechChallenge01.ApiGateway,TechChallenge01.Infra.Consumer]
     steps:
       - uses: actions/checkout@v4
-      
-      - name: Docker Login
-        uses: docker/login-action@v3
+      - name: Build & Push Docker Images
+        uses: docker/build-push-action@v6.7.0
         with:
-          username: 'ciroa'
-          password: ${{ secrets.SECRET_DOCKERHUB }}
-      
-      - name: Build and Push Docker Images for Each Service
-        env:
-          DOCKER_REPO: 'ciroa/tech-challenge-group43'
-        run: |
-          declare -a services=("TechChallenge01.Api" "TechChallenge01.ApiMessaging" "TechChallenge01.TokenApi" "TechChallenge01.WebStatus" "TechChallenge01.ApiGateway" "TechChallenge01.Infra.Consumer")
-
-          for service in "${services[@]}"; do
-            IMAGE_NAME=$(echo "$service" | tr '[:upper:]' '[:lower:]')
-            docker build -t $DOCKER_REPO:$IMAGE_NAME-latest -f ./src/$service/Dockerfile .
-            docker push $DOCKER_REPO:$IMAGE_NAME-latest
-          done
+          context: .
+          file: ./src/${{ matrix.service }}/Dockerfile
+          tags: 'liciomachado/tech-challenge-group43:${{ matrix.service }}-latest'
+          push: true
