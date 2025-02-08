@@ -58,5 +58,5 @@ jobs:
         with:
           context: .
           file: ./src/${{ matrix.service }}/Dockerfile
-          tags: 'liciomachado/tech-challenge-group43:${{ matrix.service }}-latest'
+          tags: 'ciroa/tech-challenge-group43:${{ matrix.service }}-latest'
           push: true
