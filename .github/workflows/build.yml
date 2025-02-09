@@ -50,7 +50,7 @@ jobs:
     needs: build
     strategy:
       matrix:
-        service: [TechChallenge01.Api, TechChallenge01.TokenApi, TechChallenge01.ApiGateway, TechChallenge01.Infra.Consumer, TechChallenge01.ApiMessaging]
+        service: [TechChallenge01.Api, TechChallenge01.TokenApi, TechChallenge01.ApiGateway, TechChallenge01.Infra.Consumer,Techchallenge01.ApiMessaging]
     steps:
       - uses: actions/checkout@v4
       - name: Docker Login
