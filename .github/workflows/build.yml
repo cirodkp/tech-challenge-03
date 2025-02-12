@@ -45,6 +45,7 @@ jobs:
 
       - name: Write to Job Summary
         run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY        
+
   deploy:
     runs-on: ubuntu-latest
     needs: build
@@ -53,6 +54,7 @@ jobs:
         service: [TechChallenge01.Api, TechChallenge01.TokenApi, TechChallenge01.ApiGateway, TechChallenge01.Infra.Consumer,Techchallenge01.ApiMessaging]
     steps:
       - uses: actions/checkout@v4
+
       - name: Docker Login
         uses: docker/login-action@v3.3.0
         with:
