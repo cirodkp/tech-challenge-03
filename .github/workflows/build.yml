@@ -42,7 +42,7 @@ jobs:
         with:
           recreate: true
           path: code-coverage-results.md
-
+          
       - name: Write to Job Summary
         run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY        
   deploy:
@@ -50,7 +50,7 @@ jobs:
     needs: build
     strategy:
       matrix:
-        service: [TechChallenge01.Api, TechChallenge01.TokenApi, TechChallenge01.ApiGateway, TechChallenge01.Infra.Consumer, TechChallenge01.ApiMessaging]
+        service: [TechChallenge01.Api, TechChallenge01.TokenApi, TechChallenge01.ApiGateway, TechChallenge01.Infra.Consumer,Techchallenge01.ApiMessaging]
     steps:
       - uses: actions/checkout@v4
       - name: Docker Login
@@ -65,4 +65,4 @@ jobs:
           context: .
           file: ./src/${{ matrix.service }}/Dockerfile
           tags: 'ciroa/tech-challenge-group43:${{ matrix.service }}-latest'
-          push: true
+          push: true.
