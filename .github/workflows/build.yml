@@ -65,4 +65,4 @@ jobs:
           context: .
           file: ./src/${{ matrix.service }}/Dockerfile
           tags: 'ciroa/tech-challenge-group43:${{ matrix.service }}-latest'
-          push: true.
+          push: true
